@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.debug.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js" ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="dlp.css">
+<style>
+    #second{
+        display: none;
+    }
+</style>
+
+<script>
+
+
+</script>
+</head>
+<body>
+    
+    <section id="first">
+        <div style="width: auto; border: 2px solid white;">
+            <h3 style="margin: auto; text-align: center; display: block;width: 200px;">SUNSHINE ACADEMY <br>PURKAZI</h3>
+            <img  src="logo sunshine.png" style="margin: auto; height: 50px;width: 50px;border-radius: 50%;display: block;" alt="">
+        </div>
+<div class="container register">
+            <div class="row">
+                <div class="col-md-12">
+                        <div class="tab-pane fade show active text-align form-new" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <h3 class="register-heading" style="text-align: center;">Sunshine Academy <br> Daily Lesson Plans</h3>
+                            <div class="row register-form">
+                                <div class="col-md-12">
+                                    <form method="post" autocomplete="off" name="google-sheet" id="google-sheet">
+                                        
+                                        <div class="form-group">
+                                            <input type="text" readonly name="Date" class="form-control" placeholder="Date" required="" id="date"/>
+                           </div>
+                                        <div class="form-group">
+                                            <input type="text" name="Name of Teacher" class="form-control" placeholder="Teacher's Name *" value="" required="" id="name"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" name="Class" class="form-control" placeholder="class *" value="" required="" id="Tclass"/>
+                                        </div>
+                                        <div class="form-group">
+                                          <input type="text" name="Subject" class="form-control" placeholder="Subject *" value="" required="" id="subject"/>
+                                      </div>
+                                      <div class="form-group">
+                                        <input type="textarea" name="Lesson Plan" class="form-control" placeholder="Write Your Daily lesson plan" value="" id="Dlp"/>
+                       </div>
+                                        
+                        <div class="form-group">
+                       <input type="submit" name="submit" class="btnSubmit btn-block" value="Submit Your Details" onclick="recp()"/>
+                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="second">
+        <H2>Your response is submitted Successfully.</H2>
+        <a href="dlp.html"><button id="rollback">Submit other Response</button></a>
+        </section>
+    
+
+
+
+
+
+<script>
+            
+            const d = new Date();
+            document.getElementById("date").value = d.getDate() + '--' + d.getMonth() + '--' + d.getFullYear();
+            
+
+            
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbyd4qxWrF34QPgVlQOuMcIw0jUuZjnHeuqWlOMkutszZEv69tr0L28c82ZNKC6PpFHg/exec'
+            const form = document.forms['google-sheet']
+          
+            form.addEventListener('submit', e => {
+              e.preventDefault()
+              fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+              .then(Response => alert("Fee submitted successfully")).then(myFunction()).then($("#first").css("display", "none")).then($("#second").css("display", "block"))
+
+              
+              .catch(error => console.error('Error!', error.message))
+            
+            })
+
+            $("#rollback").click(function(){
+                $("#second").css("display", "none");
+                $("#first").css("display", "block");
+                });
+
+
+            function myFunction() {
+            document.getElementById("google-sheet").reset();
+            }
+
+            async function generatePDF() {
+                        document.getElementById("downloadButton").innerHTML = "Currently downloading, please wait";
+
+                        //Downloading
+                        var downloading = document.getElementById("toprint");
+                        var doc = new jsPDF('l', 'pt');
+
+                        await html2canvas(downloading, {
+                            //allowTaint: true,
+                            //useCORS: true,
+                            width: 530
+                        }).then((canvas) => {
+                            //Canvas (convert to PNG)
+                            doc.addImage(canvas.toDataURL("image/png"), 'PNG', 5, 5, 500, 200);
+                        })
+
+                        doc.save("Document.pdf");
+
+                        //End of downloading
+
+                        document.getElementById("downloadButton").innerHTML = "Click to download the receipt";
+                    }
+</script>
+
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+       
+</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+form {border: 3px solid #f1f1f1;}
+
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+}
+
+img.avatar {
+  width: 40%;
+  border-radius: 50%;
+}
+
+.container {
+  padding: 16px;
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+
+<h2>Login Portal for Sunshine Academy</h2>
+
+  <div class="imgcontainer">
+    <img src="logo sunshine.png" style="height: 50px;width: 50px;" alt="Avatar" class="avatar">
+  </div>
+
+  <div class="container" id="first">
+    <div>
+      <form id="form" method="GET">
+        <div>
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" required>
+        </div>
+        <div>
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password">
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+      </div>
+      <div id="error"></div>
+      <div id="success"></div>
+    <label>
+      <input type="checkbox" checked="checked" name="remember"> Remember me
+    </label>
+  </div>
+
+  <div id="success"></div>
+  <div id="second" style="display: none;"><a href = "mainpage.html"><button>Welcome <span id="name1"></span> to the portal of sunshine academy. click to continue.</button></a></div>
+    
+
+  <script>
+    const name = document.getElementById('name')
+    const password = document.getElementById('password')
+    const form = document.getElementById('form')
+    const errorElement = document.getElementById('error')
+    const success = document.getElementById('success')
+    const name1 = document.getElementById('name1')
+    
+    form.addEventListener('submit', (e) => {
+    let messages = []
+    if (name.value === '' || name.value == null) {
+    messages.push('Name is required')
+    }
+    
+    if (messages.length > 0) {
+    e.preventDefault()
+    errorElement.innerText = messages.join(', ')
+    success.innerHTML = ""
+    }
+    if(password.value === 'admin@123' && name.value === 'staff'){
+      e.preventDefault()
+    $("#first").hide();
+    $("#second").css("display", "block");
+    name1.innerText = name.value;
+    }
+    else{
+      e.preventDefault()
+    success.innerHTML = '<h3>Sorry either password or username is incorrect</h3>'
+    }
+    })
+    
+    </script>
+
+</body>
+</html>
